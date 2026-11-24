@@ -10,26 +10,11 @@ type ViperHandler[T any] struct {
 	format   string
 }
 
-func NewViperHandler[T any](path, filename, format *string) *ViperHandler[T] {
-	flnm := "config"
-	if filename != nil && *filename != "" {
-		flnm = *filename
-	}
-
-	fmt := "yaml"
-	if format != nil && *format != "" {
-		fmt = *format
-	}
-
-	pth := "."
-	if path != nil && *path != "" {
-		pth = *path
-	}
-
+func NewViperHandler[T any](path, filename, format string) *ViperHandler[T] {
 	return &ViperHandler[T]{
-		path:     pth,
-		filename: flnm,
-		format:   fmt,
+		path:     path,
+		filename: filename,
+		format:   format,
 	}
 }
 

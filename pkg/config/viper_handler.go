@@ -19,16 +19,18 @@ func NewViperHandler[T any](path, filename, format string) *ViperHandler[T] {
 }
 
 func (h *ViperHandler[T]) GetConfig() (*T, error) {
-	viper.SetConfigName(h.filename)
-	viper.SetConfigType(h.format)
-	viper.AddConfigPath(h.path)
+	v := viper.New()
 
-	if err := viper.ReadInConfig(); err != nil {
+	v.SetConfigName(h.filename)
+	v.SetConfigType(h.format)
+	v.AddConfigPath(h.path)
+
+	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}
 
 	var cfg T
-	if err := viper.Unmarshal(&cfg); err != nil {
+	if err := v.Unmarshal(&cfg); err != nil {
 		return nil, err
 	}
 
